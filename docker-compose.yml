@@ -1,0 +1,58 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:14.10-alpine
+    container_name: db
+    command: -p 5444
+    expose:
+      - 5444
+    ports:
+      - "5444:5444"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres_db
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
+
+  #app:
+  #  container_name: app
+  #  build:
+  #    context: .
+  #  env_file:
+  #    - .env
+  #  command: ["/fastapi_app/docker/app.sh"]
+
+  #  ports:
+  #    - 9999:8000
+  #  depends_on:
+  #    - db
+  #    - redis
+
+    #dockerfile: Dockerfile
+    #image: app
+    #environment:
+    #  - DATABASE_URL=postgressql://postgres:postgres@0.0.0.0:5432/postgres_db
+    #ports:
+    #  - "8000:8000"
+
+    #networks:
+    #  - custom
+
+  # nginx service
+  #web:
+  #  container_name: "web"
+  #  image: nginx:alpine3.17
+  #  depends_on:
+  #    - app
+  #  ports:
+  #    - "8080:80"
+  #  volumes:
+  #    - ./app/conf.d:/etc/nginx/conf.d
+  #  networks:
+  #    - custom
